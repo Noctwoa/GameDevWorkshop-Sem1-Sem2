@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    public float playSpeed;
+    [SerializeField] private float playSpeed;
 
     public Vector2 spawnPoint;
 
@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour
 
     public bool isMoving;
 
+    [SerializeField] private int maxHealth;
+    public int currentHealth;
+
+    [SerializeField] private Transform healthContainer;
+    [SerializeField] private GameObject heartPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +31,13 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         coinsText.text = "Coins: "+coins.ToString();
+
+        currentHealth = maxHealth;
+
+        for(int i = 0; i<currentHealth; i++)
+        {
+            Instantiate(heartPrefab, healthContainer);
+        }
     }
 
     // Update is called once per physics call
@@ -55,6 +67,19 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
 
         rb2d.velocity = new Vector2(horizontalInput * playSpeed, verticalInput * playSpeed);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth = currentHealth - damage;
+        if(currentHealth <= 0)
+        {
+            print("Game over");
+        }
+        else
+        {
+            Respawn();
+        }
     }
     // Respawning
     public void Respawn()

@@ -8372,6 +8372,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1293328034}
     - target: {fileID: 5888323046186995418, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
+      propertyPath: levelName
+      value: TestLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5888323046186995418, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
       propertyPath: maxHealth
       value: 5
       objectReference: {fileID: 0}
@@ -8380,9 +8384,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 824172474790675284, guid: fe10f060423c3b24c8f1b005f9888839, type: 3}
     - target: {fileID: 5888323046186995418, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
+      propertyPath: canvasTransform
+      value: 
+      objectReference: {fileID: 559771134}
+    - target: {fileID: 5888323046186995418, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
       propertyPath: healthContainer
       value: 
       objectReference: {fileID: 602465943}
+    - target: {fileID: 5888323046186995418, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
+      propertyPath: gameOverScreenPrefab
+      value: 
+      objectReference: {fileID: 1633325134542869485, guid: 6230bfb58c3d2284e904fdaa9e6115a5, type: 3}
     - target: {fileID: 6746433718154330054, guid: add8ca6e4f1de9b479acfe25a98a7915, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

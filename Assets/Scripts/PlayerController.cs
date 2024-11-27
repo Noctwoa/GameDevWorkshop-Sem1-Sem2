@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,6 +25,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform healthContainer;
     [SerializeField] private GameObject heartPrefab;
+    [SerializeField] private Transform canvasTransform;
+    [SerializeField] private GameObject gameOverScreenPrefab;
+
+    private GameObject endGameNow;
+    [SerializeField] private string levelName;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +40,7 @@ public class PlayerController : MonoBehaviour
         coinsText.text = "Coins: "+coins.ToString();
 
         currentHealth = maxHealth;
-
-        for(int i = 0; i<currentHealth; i++)
-        {
-            Instantiate(heartPrefab, healthContainer);
-        }
+        UpdateHeart();
     }
 
     // Update is called once per physics call
@@ -69,12 +72,32 @@ public class PlayerController : MonoBehaviour
         rb2d.velocity = new Vector2(horizontalInput * playSpeed, verticalInput * playSpeed);
     }
 
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(levelName);
+    }
+
+    public void UpdateHeart()
+    {
+        for (int c = 0; c < healthContainer.childCount; c++)
+        {
+            Destroy(healthContainer.GetChild(c).gameObject);
+        }
+
+        for (int i = 0; i < currentHealth; i++)
+        {
+            Instantiate(heartPrefab, healthContainer);
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth = currentHealth - damage;
+        UpdateHeart();
         if(currentHealth <= 0)
         {
-            print("Game over");
+            endGameNow = Instantiate(gameOverScreenPrefab, canvasTransform);
+            endGameNow.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => ResetScene());
         }
         else
         {
